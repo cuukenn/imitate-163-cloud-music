@@ -18,6 +18,8 @@ import defaultContent from '@/page/playIndexContent/defaultContent.vue'
 import lyricsContent from '@/page/playIndexContent/lyricsContent.vue'
 //搜索界面
 import searchPage from '@/page/searchPage.vue'
+//测试界面
+import test from '@/page/test.vue'
 Vue.use(Router)
 
 const musicGroundRouter = [
@@ -55,6 +57,11 @@ export default new Router({
       name: 'welcome',
       path: '/',
       component: welcome
+    },
+    {
+      name: 'test',
+      path: '/test',
+      component: test
     },
     {
       name: 'index',
