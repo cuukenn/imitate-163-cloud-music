@@ -23,8 +23,8 @@ const state = {
     name: '人生若只如初见',
     url: '/static/audio/梁静茹 - 人生若只如初见.mp3',
     imageUrl: '/static/image/music-1.jpg'
-  },
-}
+  }
+};
 
 // getters
 const getters = {
@@ -75,13 +75,13 @@ const actions = {
 }
 // mutations
 const mutations = {
-  updatesourceUrl(state, SourceUrl) {
+  updatesourceUrl(state, SourceUrl = '') {
     state.music.url = SourceUrl
   },
-  updateMusic(state, music) {
+  updateMusic(state, music = {}) {
     state.music = music
   },
-  updateisPlay(state, isPlay) {
+  updateisPlay(state, isPlay = false) {
     state.isPlay = isPlay;
   },
   updateaudioElem(state, audioElem) {

@@ -91,9 +91,10 @@
       },
       borderRadiusFormat: function () {
         return (this.style.width >> 1) + 'px';
+
       },
-      step:function () {
-        if(this.isPlay)return 1;
+      step: function () {
+        if (this.isPlay) return 1;
         return 0;
       }
     },

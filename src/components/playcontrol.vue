@@ -4,13 +4,13 @@
     <flexbox :gutter="0">
       <flexbox-item :span="3/16">
         <div style="box-sizing: border-box;">
-          <img :src="this.music.imageUrl" height="48" v-on:click="this.showPlayIndex"
+          <img :src="this.music.imageUrl" height="48" width="100%" v-on:click="this.showPlayIndex"
                style="border: 1px whitesmoke solid"/>
         </div>
       </flexbox-item>
       <flexbox-item :span="6/16">
         <p v-on:click="this.showPlayIndex" style="font-size: 10px">
-          <strong>{{this.music.name}}</strong>
+          <strong>{{this.music.name}}-<small>{{this.music.author}}</small></strong>
         </p>
       </flexbox-item>
       <flexbox-item :span="3/16">

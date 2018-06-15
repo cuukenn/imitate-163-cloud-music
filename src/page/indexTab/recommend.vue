@@ -13,36 +13,46 @@
 
       <Flexbox style="border-bottom: 1px solid black">
         <FlexboxItem>
-          <div class="center">
-            <i class="iconfont icon-CN_doubanFM demo"></i>
-            <br/>
-            <p>
-              <small>私人FM</small>
-            </p>
+          <div class="center" v-on:click="$router.push('/FM')">
+            <card>
+              <i slot="header"  class="iconfont icon-CN_doubanFM demo"></i>
+              <p slot="content">
+                <small>私人FM</small>
+              </p>
+            </card>
           </div>
         </FlexboxItem>
         <FlexboxItem>
-          <div class="center"><i class="iconfont icon-rili demo"></i>
-            <br/>
-            <p>
-              <small>每日推荐</small>
-            </p>
-          </div>
-
-        </FlexboxItem>
-        <FlexboxItem>
-          <div class="center"><i class="iconfont icon-jiarugedan demo"></i><br/>
-            <p>
-              <small>歌单</small>
-            </p>
+          <div v-on:click="$router.push('/everyDayRecmend')" class="center">
+            <card>
+              <i slot="header"  class="iconfont icon-rili demo"></i>
+              <p slot="content">
+                <small>每日推荐</small>
+              </p>
+            </card>
           </div>
 
         </FlexboxItem>
         <FlexboxItem>
-          <div class="center"><i class="iconfont icon-paixingbang demo"></i><br/>
-            <p>
-              <small>排行榜</small>
-            </p>
+          <div v-on:click="$router.push('/MusicList')" class="center">
+            <card>
+              <i slot="header"  class="iconfont icon-jiarugedan demo"></i>
+              <p slot="content">
+                <small>歌单</small>
+              </p>
+            </card>
+          </div>
+
+        </FlexboxItem>
+        <FlexboxItem>
+          <div v-on:click="$router.push('/RankingList')" class="center">
+            <card>
+              <i slot="header" class="iconfont icon-paixingbang demo"></i>
+              <p slot="content">
+                <small>排行榜</small>
+              </p>
+            </card>
+
           </div>
         </FlexboxItem>
       </Flexbox>
@@ -67,7 +77,12 @@
   import sixPalaces from '@/components/sixPalace.vue'
   import 'swiper/dist/css/swiper.css'
   import {swiper, swiperSlide} from 'vue-awesome-swiper'
-  import {Flexbox, FlexboxItem} from 'vux'
+  import {
+    Flexbox, FlexboxItem,
+    Card
+  }
+    from
+      'vux'
   import {mapGetters, mapActions} from 'vuex'
 
   export default {
@@ -75,7 +90,8 @@
       swiper,
       swiperSlide,
       Flexbox, FlexboxItem,
-      sixPalaces
+      sixPalaces,
+      Card
     },
     data() {
       return {
@@ -101,26 +117,33 @@
           "../../../static/image/slide-8.jpg",],
         swiperElm: null
       }
-    },
+    }
+    ,
     computed: {
-      ...mapGetters([
-        'sixPalacesData',
-        'recommendHeight'
-      ]),
-      height: function () {
-        return this.recommendHeight + 'px';
-      }
-    },
+      ...
+        mapGetters([
+          'sixPalacesData',
+          'recommendHeight'
+        ]),
+      height:
+
+        function () {
+          return this.recommendHeight + 'px';
+        }
+    }
+    ,
     mounted: function () {
-      if(!this.swiperElm===null){
+      if (!this.swiperElm === null) {
         this.swiperElm = document.querySelector('#recommendSwiper');
         this.$store.dispatch('changerecommendHeight', this.recommendHeight - this.swiperElm.offsetHeight);
       }
-    },
+    }
+    ,
     methods: {
-      ...mapActions([
-        'changerecommendHeight'
-      ])
+      ...
+        mapActions([
+          'changerecommendHeight'
+        ])
     }
   }
 </script>

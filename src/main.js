@@ -10,8 +10,12 @@ import router from './router/index'
 import {AlertPlugin, ToastPlugin} from 'vux'
 import store from './store'
 import 'es6-promise/auto'
+import axios from 'axios'
+
 Vue.use(VueRouter)
 Vue.use(Vuex)
+
+Vue.prototype.$ajax = axios;
 /**
  * 加载插件
  */

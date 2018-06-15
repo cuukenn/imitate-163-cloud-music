@@ -6,8 +6,8 @@
     <ViewBox id="viewBox_playIndex">
       <div slot="header">
         <x-header left-options.showBack="true" style="background-color:rgba(126,116,126,0.8);">
-          <p style="font-size: 1.6rem">{{this.music.name}}
-            <small v-text="this.music.author" style="font-size: 1.2rem"></small>
+          <p style="font-size: 1.6rem">{{localMusic.name}}
+            <small v-text="localMusic.author" style="font-size: 1.2rem"></small>
           </p>
           <div slot="right"><i size="25" class="iconfont icon-iconfontzhizuobiaozhun20"></i></div>
         </x-header>
@@ -28,7 +28,7 @@
                   </div>
                 </flexbox-item>
                 <flexbox-item>
-                  <div class="flex-demo-playIndex"><i class="iconfont icon-icon" style="font-size: 25px"></i></div>
+                  <div class="flex-demo-playIndex"><i class="iconfont icon-download" style="font-size: 25px"></i></div>
                 </flexbox-item>
                 <flexbox-item>
                   <div class="flex-demo-playIndex"><i class="iconfont icon-pinglun" style="font-size: 25px"></i></div>
@@ -49,7 +49,8 @@
                 </flexbox-item>
                 <flexbox-item :span="6/10">
                   <div class="flex-demo-playIndex" style="position: relative">
-                    <progress style="width: 100%;" class="processbar" :value="this.currentTime" :max="this.totalTime"
+                    <progress ref="progress" style="width: 100%;" class="processbar" :value="this.currentTime"
+                              :max="this.totalTime"
                               v-on:click="this.randomProgress"></progress>
                     <div class="circle" :style="{left:this.cirCleLeftFormat}"></div>
                   </div>
@@ -94,7 +95,8 @@
       </div>
     </ViewBox>
     <div v-transfer-dom>
-      <popup v-model="show" position="bottom" max-height="40%" height="40%" style="border-top-right-radius: 15px;border-top-left-radius: 15px;">
+      <popup v-model="show" position="bottom" max-height="40%" height="40%"
+             style="border-top-right-radius: 15px;border-top-left-radius: 15px;">
         <select-music-fade></select-music-fade>
       </popup>
     </div>
@@ -170,12 +172,11 @@
     Tabbar,
     Flexbox, FlexboxItem,
     ViewBox,
-    TransferDom, Popup,XButton
+    TransferDom, Popup, XButton
   } from 'vux'
   import {mapGetters, mapActions} from 'vuex'
   import selectMusicFade from '@/components/selectMusicFade.vue'
 
-  let index = 0;
   export default {
     directives: {
       TransferDom
@@ -184,16 +185,10 @@
       XHeader,
       Tabbar,
       Flexbox, FlexboxItem, ViewBox,
-      TransferDom, Popup,XButton,selectMusicFade
+      TransferDom, Popup, XButton, selectMusicFade
     },
     data: function () {
       return {
-        localMusic: {
-          author: "",
-          name: "",
-          url: "",
-          imageUrl: ''
-        },
         elem: {
           progressEle: null
         },
@@ -204,16 +199,18 @@
           height: '0px',
           cirCleLeft: 0
         },
-        show:false
+        show: false
       }
     },
     computed: {
       ...mapGetters({
-        music: 'music',
+        playListData: 'playListData',
         totalTime: 'duration',
         currentTime: 'currentTime',
         ado: 'audioElem',
-        isPlay: 'isPlay'
+        isPlay: 'isPlay',
+        localMusic: 'music',
+        playIndex: 'playIndex'
       }),
       cunrentTimeFormat: function () {
         return this.formatTime(this.currentTime);
@@ -224,41 +221,23 @@
       cirCleLeftFormat: function () {
         if (this.elem.progressEle) return (this.currentTime / this.totalTime * this.elem.progressEle.offsetWidth) + 'px';
         else return '0px';
+
       },
       imageUrlFormat: function () {
-        return "url('" + this.music.imageUrl + "')";
+        return "url('" + this.localMusic.imageUrl + "')";
       },
     },
     mounted: function () {
+      this.elem.progressEle = this.$refs.progress;
       this.style.height = window.innerHeight + 'px';
-      this.localMusic = [{
-        author: '梁静茹',
-        name: '人生若只如初见',
-        url: '/static/audio/梁静茹 - 人生若只如初见.mp3',
-        imageUrl: '/static/image/music-1.jpg'
-      },
-        {
-          author: '许嵩',
-          name: '玫瑰花的葬礼',
-          url: '/static/audio/许嵩 - 玫瑰花的葬礼.mp3',
-          imageUrl: '/static/image/music-2.jpg'
-        },
-        {
-          author: '许嵩',
-          name: '深夜书店',
-          url: '/static/audio/许嵩、洛天依 - 深夜书店.mp3',
-          imageUrl: '/static/image/test1.jpg'
-        }
-      ]
-      this.$store.dispatch('changeMusic', this.localMusic[index]);
-      this.elem.progressEle = document.querySelector('progress');
     },
     methods: {
       ...mapActions([
         'changecurrentTime',
         'changeMusicUrl',
         'changeMusic',
-        'changeStatus'
+        'changeStatus',
+        'changeplayIndex'
       ]),
       changePlayStatus: function (isPlay) {
         this.$store.dispatch('changeStatus', isPlay);
@@ -268,25 +247,29 @@
         let x = evObject.offsetX;
         let newC = ~~(x / this.elem.progressEle.offsetWidth * this.totalTime);
         this.$store.dispatch('changecurrentTime', newC);
-        // this.$store.commit('updatecurrentTime',newC)
       },
       collect: function () {
         this.status.isDianZan = !this.status.isDianZan;
       },
       nextMusic: function () {
-        this.$store.dispatch('changeMusic', this.localMusic[index++ % 3]);
+        let index = (this.playIndex + 1) % this.playListData.length;
+        this.$store.dispatch('changeMusic', this.playListData[index]);
+        this.$store.dispatch('changeplayIndex', index);
         this.changePlayStatus(true)
       },
       preMusic: function () {
-        this.$store.dispatch('changeMusic', this.localMusic[index++ % 3]);
+        let index = (this.playIndex - 1) % this.playListData.length;
+        if (index < 0) index = this.playListData.length - 1;
+        this.$store.dispatch('changeMusic', this.playListData[index]);
+        this.$store.dispatch('changeplayIndex', index);
         this.changePlayStatus(true)
       },
       formatTime: function (val) {
         return ~~(val / 60) + ':' + parseInt(val % 60);
       },
-      click:function () {
+      click: function () {
         // this.$store.dispatch('changeplayListIsShow', true);
-        this.show=true;
+        this.show = true;
       }
     }
   }

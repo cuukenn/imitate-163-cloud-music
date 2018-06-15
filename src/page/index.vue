@@ -1,9 +1,7 @@
 <template>
   <div>
-    <div style="height:100%;">
-
+    <div>
       <view-box ref="viewBox">
-
         <header slot="header">
           <myheader></myheader>
         </header>
@@ -16,22 +14,10 @@
   </div>
 </template>
 <style lang="less" scoped>
-  * {
-    padding: 0;
-    margin: 0;
-    border: none;
-  }
-
-  html, body {
-    height: 100%;
-    width: 100%;
-    overflow-x: hidden;
-  }
-
   footer {
     position: fixed;
     width: 100%;
-    height: 48px;
+    height: 8%;
     bottom: 0px;
     left: 0px;
   }
@@ -47,7 +33,7 @@
 
   export default {
     components: {
-      myheader, playcontrol, ViewBox, menuPage,selectMusicFade
+      myheader, playcontrol, ViewBox, menuPage, selectMusicFade
     },
     mounted: function () {
       let height = window.innerHeight - document.querySelector('header').offsetHeight - document.querySelector('footer').offsetHeight;

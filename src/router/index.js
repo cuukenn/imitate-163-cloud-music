@@ -18,6 +18,29 @@ import defaultContent from '@/page/playIndexContent/defaultContent.vue'
 import lyricsContent from '@/page/playIndexContent/lyricsContent.vue'
 //搜索界面
 import searchPage from '@/page/searchPage.vue'
+//歌单界面
+import playListPage from '@/page/playListPage.vue'
+//侧拉菜单
+import freeFlow from '@/page/menuAside/freeFlow.vue'
+import game from '@/page/menuAside/game.vue'
+import myFriend from '@/page/menuAside/myFriend.vue'
+import myMessage from '@/page/menuAside/myMessage.vue'
+import neiborhood from '@/page/menuAside/neiborhood.vue'
+import shop from '@/page/menuAside/shop.vue'
+import skinStyle from '@/page/menuAside/skinStyle.vue'
+import timing from '@/page/menuAside/timing.vue'
+import VIP from '@/page/menuAside/VIP.vue'
+import voiceToMusic from '@/page/menuAside/voiceToMusic.vue'
+
+//音乐界面四个圆圈
+import everyDayRecmend from '@/page/RecomendPage/everyDayRecmend.vue'
+import FM from '@/page/RecomendPage/FM.vue'
+import MusicList from '@/page/RecomendPage/MusicList.vue'
+import RankingList from '@/page/RecomendPage/RankingList.vue'
+
+//search页面子路由
+import SearchResult from '@/page/SearchResult.vue'
+
 Vue.use(Router)
 
 const musicGroundRouter = [
@@ -57,6 +80,26 @@ export default new Router({
       component: welcome
     },
     {
+      name: 'everyDayRecmend',
+      path: '/everyDayRecmend',
+      component: everyDayRecmend
+    },
+    {
+      name: 'FM',
+      path: '/FM',
+      component: FM
+    },
+    {
+      name: 'MusicList',
+      path: '/MusicList',
+      component: MusicList
+    },
+    {
+      name: 'RankingList',
+      path: '/RankingList',
+      component: RankingList
+    },
+    {
       name: 'index',
       path: '/index',
       component: index,
@@ -88,7 +131,68 @@ export default new Router({
     {
       path: '/searchPage',
       name: 'searchPage',
-      component: searchPage
+      component: searchPage,
+      children: [
+        {
+          name: 'SearchResult',
+          path: 'SearchResult',
+          component: SearchResult
+        }]
+    },
+    {
+      path: '/playListPage',
+      name: 'playListPage',
+      component: playListPage
+    },
+    {
+      name: 'freeFlow',
+      path: '/menu/freeFlow',
+      component: freeFlow
+    },
+    {
+      name: 'game',
+      path: '/menu/game',
+      component: game
+    },
+    {
+      name: 'myFriend',
+      path: '/menu/myFriend',
+      component: myFriend
+    },
+    {
+      name: 'myMessage',
+      path: '/menu/myMessage',
+      component: myMessage
+    },
+    {
+      name: 'neiborhood',
+      path: '/menu/neiborhood',
+      component: neiborhood
+    },
+    {
+      name: 'shop',
+      path: '/menu/shop',
+      component: shop
+    },
+    {
+      name: 'skinStyle',
+      path: '/menu/skinStyle',
+      component: skinStyle
+    },
+    {
+      name: 'timing',
+      path: '/menu/timing',
+      component: timing
+    },
+    {
+      name: 'VIP',
+      path: '/menu/VIP',
+      component: VIP
+    },
+    {
+      name: 'voiceToMusic',
+      path: '/menu/voiceToMusic',
+      component: voiceToMusic
     }
   ]
 })

@@ -15,7 +15,8 @@
       </div>
       <div>
         <Group style="font-size: 1.6rem;">
-          <cell  v-for="(item,index) in this.list" v-bind:key="index" :title="item.title" is-link @click.native.stop="clickMenuItem" primary="content" class="fontSize">
+          <cell v-for="(item,index) in this.list" v-bind:key="index" :title="item.title" is-link
+                primary="content" class="fontSize" :link="item.link">
             <i slot="icon" class="iconfont" :class="[item.class]"></i>
           </cell>
         </Group>
@@ -51,9 +52,11 @@
     height: 100%;
     background-color: whitesmoke;
   }
-  .fontSize{
+
+  .fontSize {
     font-size: 1.4rem;
   }
+
   .hid {
     display: none;
   }
@@ -88,52 +91,62 @@
           {
             title: "我的消息",
             class: 'icon-xiaoxi',
-            borderTop: false
+            borderTop: false,
+            link: '/menu/myMessage'
           },
           {
             title: "VIP会员",
             class: 'icon-huiyuan',
-            borderTop: false
+            borderTop: false,
+            link: '/menu/VIP'
           },
           {
             title: "商城",
             class: 'icon-mall',
-            borderTop: false
+            borderTop: false,
+            link: '/menu/shop'
           },
           {
             title: "在线听歌免流量",
             class: 'icon-gongjuxiang',
-            borderTop: false
+            borderTop: false,
+            link: '/menu/freeFlow'
           },
           {
             title: "我的好友",
             class: 'icon-ren',
-            borderTop: true
+            borderTop: true,
+            link: '/menu/myFriend'
           },
           {
             title: "附近的人",
             class: 'icon-location',
-            borderTop: false
+            borderTop: false,
+            link: '/menu/neiborhood'
           },
           {
             title: "个性换肤",
             class: 'icon-yifu',
-            borderTop: true
+            borderTop: true,
+            link: '/menu/skinStyle'
           },
           {
             title: "听歌拾曲",
             class: 'icon-icon--',
-            borderTop: false
+            borderTop: false,
+            link: '/menu/voiceToMusic'
           },
           {
             title: "定时停止播放",
             class: 'icon-erji-dingshirenwu',
-            borderTop: false
+            borderTop: false,
+            link: '/menu/timing'
           },
           {
             title: "扫一扫",
             class: 'icon-saoyisao',
-            borderTop: false
+            borderTop: false,
+            link: '/menu/timing'
           }
         ],
       }
