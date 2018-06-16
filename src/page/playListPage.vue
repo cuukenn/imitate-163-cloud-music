@@ -3,7 +3,9 @@
     <link rel="stylesheet" href="../../static/css/iconfont.css">
     <view-box>
       <header class="header" slot="header">
-        <x-header></x-header>
+        <x-header>
+          <template name="left">歌单</template>
+        </x-header>
       </header>
       <div class="content">
         <div id="FM" style=" margin-left: 10% ; height: 150px;">

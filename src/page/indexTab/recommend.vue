@@ -116,7 +116,7 @@
           "../../../static/image/slide-6.jpg",
           "../../../static/image/slide-7.jpg",
           "../../../static/image/slide-8.jpg",],
-        swiperElm: null
+        swiperElm: null,
       }
     },
     computed: {
@@ -138,6 +138,7 @@
     },
     mounted: function () {
       this.getSixPalacesData();
+      this.getBanner();
       if (!this.swiperElm === null) {
         this.swiperElm = document.querySelector('#recommendSwiper');
         this.$store.dispatch('changerecommendHeight', this.recommendHeight - this.swiperElm.offsetHeight);
@@ -148,6 +149,15 @@
         mapActions([
           'changerecommendHeight'
         ]),
+      getBanner: function () {
+        this.$ajax.get('http://localhost:3000/banner').then((rs) => {
+          let banners = rs.data.banners;
+          while (this.swiperSlides.length > 0) this.swiperSlides.pop();
+          banners.forEach((item, index, value) => {
+            this.swiperSlides.push(item.picUrl);
+          })
+        })
+      },
       getSixPalacesData: function () {
         this.$vux.loading.show({
           text: 'Loading'
@@ -159,6 +169,12 @@
           obj.list = rs.data.result;
           list.push(obj);
           this.$store.dispatch('changeSixPalacesData', list);
+          this.$vux.loading.hide();
+        }).catch(err => {
+          this.$vux.toast.show({
+            text: '网络出错',
+            type: 'warn',
+          })
           this.$vux.loading.hide();
         })
       }

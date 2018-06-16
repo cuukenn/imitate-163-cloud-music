@@ -9,7 +9,7 @@
             <p>20k高音质无限下载，手机端多同步</p>
           </div>
           <div style="bottom: 3rem;position: absolute;left: 38%;bottom: 4%">
-            <x-button text="立即登陆" action-type="button" :mini="true"></x-button>
+            <x-button text="立即登陆" action-type="button" :mini="true" link="/menu/login"></x-button>
           </div>
         </div>
       </div>

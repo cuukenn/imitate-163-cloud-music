@@ -31,6 +31,7 @@ import skinStyle from '@/page/menuAside/skinStyle.vue'
 import timing from '@/page/menuAside/timing.vue'
 import VIP from '@/page/menuAside/VIP.vue'
 import voiceToMusic from '@/page/menuAside/voiceToMusic.vue'
+import login from '@/page/menuAside/login.vue'
 
 //音乐界面四个圆圈
 import everyDayRecmend from '@/page/RecomendPage/everyDayRecmend.vue'
@@ -188,6 +189,11 @@ export default new Router({
       name: 'VIP',
       path: '/menu/VIP',
       component: VIP
+    },
+    {
+      name: 'login.vue',
+      path: '/menu/login',
+      component: login
     },
     {
       name: 'voiceToMusic',

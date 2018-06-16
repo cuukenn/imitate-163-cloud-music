@@ -17,17 +17,17 @@
           title="播放全部">
           <i slot="icon" class="iconfont icon-bofang1"></i>
         </cell>
-        <cell-box v-for="i in 4" :key="i">
-          <div id="LB-1" style="height:4rem;width: 100%;">
-            <div style="line-height: 50px;width: 10%; text-indent: 10px;float: left;">{{i}}</div>
+        <cell-box v-for="(item,index) in this.playList" :key="index">
+          <div id="LB-1" style="height:4rem;width: 100%;" v-on:click="selectList(index)">
+            <div style="line-height: 50px;width: 10%; text-indent: 10px;float: left;">{{index+1}}</div>
             <div style="width: 70%;float: left;">
               <div
                 style="float: left; width: 100%; height: 3rem; line-height: 35px;text-indent: 20px;">
-                神器白发
+                {{ item.name}}
               </div>
               <div
                 style="float: left; width: 100%;height: 1rem;text-indent: 20px;font-size: 10px;">
-                西瓜MM
+                {{item.artists[0].name}}
               </div>
             </div>
             <div style="float: left; width: 10%; ">xxxx</div>
@@ -101,6 +101,7 @@
 </style>
 <script>
   import {ViewBox, XHeader, Flexbox, FlexboxItem, Group, CellBox, Cell, XImg} from 'vux'
+  import {mapActions, mapGetters} from 'vuex'
   import playcontrol from '@/components/playcontrol.vue'
 
   export default {
@@ -112,6 +113,66 @@
       Group, CellBox, Cell,
       playcontrol,
       XImg
+    },
+    data: function () {
+      return {
+        playList: []
+      }
+    },
+    computed: {
+      ...mapGetters([
+        'playListData'
+      ])
+    },
+    beforeRouteEnter(to, from, next) {
+      next(vm => {
+        vm.getData();
+      })
+    },
+    beforeRouteLeave(to, from, next) {
+      this.$vux.loading.hide();
+      next();
+    },
+    methods: {
+      ...mapActions([
+        'changeplayListData',
+        'changeMusic',
+        'changeplayIndex',
+        'changeStatus',
+        'addMusic'
+      ]),
+      getData: function () {
+        this.$vux.loading.show({
+          text: 'Loading'
+        })
+        this.$ajax.get('http://localhost:3000/recommend/songs', {xhrFields: {withCredentials: true}}).then((rs) => {
+          this.playList = rs.data.recommend || {};
+          this.$vux.loading.hide();
+        }).catch(err => {
+          this.$vux.toast.show({
+            text: '网络出错',
+            type: 'warn',
+          })
+          this.$vux.loading.hide();
+        })
+      },
+      selectList: function (index) {
+        let musicList = [];
+        this.playList.forEach((item, index, value) => {
+          let obj = {};
+          obj.name = item.name;
+          obj.author = item.artists[0].name;
+          obj.imageUrl = item.album.picUrl;
+          obj.url = "";
+          obj.id = item.id;
+          musicList.push(obj);
+        });
+        this.$store.dispatch('changeplayListData', musicList);//更改正在播发列表
+        let music = musicList[index];
+        this.$store.dispatch('changeMusic', music);//分发
+        this.$store.dispatch('changeplayIndex', index);//添加到播放列表
+        this.$store.dispatch('changeStatus', true);//开始播放
+      }
     }
   }
 </script>
