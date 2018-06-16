@@ -2,7 +2,8 @@
 
   <div id="outer_playIndex">
     <link rel="stylesheet" href="static/css/iconfont.css">
-    <div id="playIndex_filter" v-bind:style="{height:this.style.height,backgroundImage:this.imageUrlFormat}"></div>
+    <div id="playIndex_filter" v-bind:style="{height:this.style.height,backgroundImage:this.imageUrlFormat}"
+         style="background-color:rgba(126,116,126,0.6)"></div>
     <ViewBox id="viewBox_playIndex">
       <div slot="header">
         <x-header left-options.showBack="true" style="background-color:rgba(126,116,126,0.8);">

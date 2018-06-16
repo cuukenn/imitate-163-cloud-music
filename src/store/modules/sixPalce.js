@@ -71,9 +71,27 @@ const getters = {
 }
 
 // actions
-const actions = {}
+const actions = {
+  changeSixPalacesData({commit}, sixPalacesData) {
+    let flag = false;
+    for (let index in state.sixPalacesData) {
+      if (state.sixPalacesData[index].title === sixPalacesData.title) {
+        flag = true;
+        return false;
+      }
+    }
+    if (!flag) {
+      commit('updateSixPalacesData', sixPalacesData)
+    }
+
+  }
+}
 // mutations
-const mutations = {}
+const mutations = {
+  updateSixPalacesData(state, sixPalacesData) {
+    state.sixPalacesData = sixPalacesData;
+  }
+}
 export default {
   state,
   getters,

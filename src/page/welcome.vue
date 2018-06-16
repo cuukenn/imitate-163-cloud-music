@@ -31,11 +31,11 @@
       return {
         time: 3,
         timeC: null,
-        height:'0px'
+        height: '0px'
       }
     },
     created: function () {
-      this.height=window.innerHeight+'px';
+      this.height = window.innerHeight + 'px';
       this.timeC = setInterval(this.decreaseTime, 1000);
     },
     methods: {

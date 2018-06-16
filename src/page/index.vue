@@ -23,7 +23,7 @@
   }
 </style>
 <script>
-  import {Tabbar, TabbarItem, ViewBox} from 'vux'
+  import {ViewBox} from 'vux'
   import myheader from '@/components/myheader.vue'
   import playcontrol from '@/components/playcontrol.vue'
   import {mapActions} from 'vuex'

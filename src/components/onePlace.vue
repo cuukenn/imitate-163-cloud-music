@@ -1,21 +1,20 @@
 <template>
-  <div style="box-sizing: border-box;clear: left">
-    <div slot="icon">
-      <x-img :default-src="this.imageUrl"></x-img>
-    </div>
-    <p style="width: 100%;height:30px;overflow: hidden;text-overflow: ellipsis;font-size: 10px" slot="label"
-              v-text="this.description"></p>
+  <div>
+    <card>
+      <x-img slot="header" default-src="/static/image/default.gif" :src="this.imageUrl"></x-img>
+      <p slot="content" v-text="this.description"></p>
+    </card>
   </div>
 </template>
 <style lang="less">
 
 </style>
 <script>
-  import {XImg} from 'vux'
+  import {XImg, Card} from 'vux'
 
   export default {
     components: {
-      XImg
+      XImg, Card
     },
     props: {
       imageUrl: '',

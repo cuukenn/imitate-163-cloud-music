@@ -1,4 +1,6 @@
 //全局播放按钮数据流控制
+import axios from 'axios'
+import $ from 'jquery'
 
 function startPlay(audioElem, commit) {
   audioElem.addEventListener("canplay", function () {
@@ -32,7 +34,7 @@ const getters = {
     return state.isPlay
   },
   sourceUrl: function (state) {
-    return state.music.url
+    return state.music.url || "";
   },
   audioElem: function (state) {
     return state.audioElem
@@ -78,8 +80,22 @@ const mutations = {
   updatesourceUrl(state, SourceUrl = '') {
     state.music.url = SourceUrl
   },
-  updateMusic(state, music = {}) {
-    state.music = music
+  updateMusic(state, music) {
+    if (music.url.length > 0 || music.url !== "") state.music = music;
+    else {
+      $.ajax({
+        type: 'GET',
+        url: 'http://localhost:3000/music/url',
+        data: {id: (music.id || 0)},
+        dataType: 'json',
+        async: false,
+        success: function (rs) {
+          music.url = rs.data[0].url || "";
+        }
+      })
+      state.music = music;
+      console.log(state.music)
+    }
   },
   updateisPlay(state, isPlay = false) {
     state.isPlay = isPlay;

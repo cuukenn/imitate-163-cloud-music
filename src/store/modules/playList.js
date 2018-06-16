@@ -33,7 +33,7 @@ const getters = {
   },
   playIndex: function (state) {
     return state.playIndex;
-  },
+  }
 }
 // actions
 const actions = {
@@ -51,16 +51,21 @@ const actions = {
         return false;
       }
     }
-
     if (!flag) {
-      console.log("ok")
       commit('addMusicMutation', music)
     }
-
+  },
+  changeplayListData({commit}, playListData) {
+    commit('updateplayListData', playListData)
   }
 }
 // mutations
 const mutations = {
+  updateplayListData(state, playListData) {
+    //不采用直接赋值是因为v-for指令不支持列表赋值更新
+    while (state.playListData.length > 0) state.playListData.pop();
+    state.playListData = state.playListData.concat(playListData);
+  },
   updateplayIndex(state, playIndex) {
     state.playIndex = playIndex;
   },

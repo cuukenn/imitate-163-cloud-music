@@ -79,12 +79,11 @@
           'playListData'
         ])
     },
-    watch: {
-      $route(to, from) {
+    beforeRouteEnter(to, from, next) {
+      next(vm => {
         this.onItemClick();
-      }
-    }
-    ,
+      })
+    },
     created: function () {
       this.value = "";
     }
@@ -142,6 +141,12 @@
             }
           }
           this.isShow = false;
+        }).catch(err => {
+          this.$vux.toast.show({
+            text: '网络出错',
+            type: 'warn',
+          })
+          this.$vux.loading.hide();
         })
       }
       ,
@@ -156,9 +161,7 @@
             music.name = this.dataList[index].name;
             music.imageUrl = this.dataList[index].artists[0].img1v1Url;
             //新建当前播放歌曲
-            console.log(JSON.stringify(music))
             this.$store.dispatch('changeMusic', music);//分发
-            this.$store.dispatch('addMusic', music);//添加到播放列表
             this.$store.dispatch('addMusic', music);//添加到播放列表
             this.$store.dispatch('changeplayIndex', this.playListData.length - 1);//添加到播放列表
             this.$store.dispatch('changeStatus', true);//开始播放

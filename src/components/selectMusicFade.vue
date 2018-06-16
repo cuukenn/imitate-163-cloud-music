@@ -40,7 +40,7 @@
 </style>
 <script>
   import {Flexbox, FlexboxItem} from 'vux'
-  import {mapGetters, mapActions} from 'vuex'
+  import {mapGetters, mapActions, mapState} from 'vuex'
 
   export default {
     name: 'selectMusicFade',
@@ -56,6 +56,10 @@
         show: 'playListIsShow',
         playIndex: 'playIndex'
       })
+      // ,
+      // ...mapState({
+      //   dataList: state => state.dataList
+      // })
     },
     methods: {
       ...mapActions([

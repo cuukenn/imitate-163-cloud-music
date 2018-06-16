@@ -7,7 +7,7 @@
 
 </style>
 <script>
-  import {} from 'vux'
+  // import {} from 'vux'
 
   export default {
     name: 'FM',

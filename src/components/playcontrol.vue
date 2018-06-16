@@ -4,13 +4,15 @@
     <flexbox :gutter="0">
       <flexbox-item :span="3/16">
         <div style="box-sizing: border-box;">
-          <img :src="this.music.imageUrl" height="48" width="100%" v-on:click="this.showPlayIndex"
-               style="border: 1px whitesmoke solid"/>
+          <x-img default-src="/static/image/default.gif" :src="this.music.imageUrl"
+                 style="height:48px;width:100%;border: 1px whitesmoke solid" v-on:click="this.showPlayIndex"></x-img>
         </div>
       </flexbox-item>
       <flexbox-item :span="6/16">
         <p v-on:click="this.showPlayIndex" style="font-size: 10px">
-          <strong>{{this.music.name}}-<small>{{this.music.author}}</small></strong>
+          <strong>{{this.music.name}}-
+            <small>{{this.music.author}}</small>
+          </strong>
         </p>
       </flexbox-item>
       <flexbox-item :span="3/16">
@@ -24,11 +26,13 @@
 
       </flexbox-item>
       <flexbox-item :span="2/16">
-        <x-icon type="navicon" size="35" style="fill:black;position:relative;top:5px;left:-3px;" v-on:click="this.click"></x-icon>
+        <x-icon type="navicon" size="35" style="fill:black;position:relative;top:5px;left:-3px;"
+                v-on:click="this.click"></x-icon>
       </flexbox-item>
     </flexbox>
     <div v-transfer-dom>
-      <popup v-model="show" position="bottom" max-height="40%" height="40%" style="border-top-right-radius: 15px;border-top-left-radius: 15px;">
+      <popup v-model="show" position="bottom" max-height="40%" height="40%"
+             style="border-top-right-radius: 15px;border-top-left-radius: 15px;">
         <select-music-fade></select-music-fade>
       </popup>
     </div>
@@ -55,10 +59,11 @@
   import {
     Flexbox, FlexboxItem, Divider, XImg,
     Tabbar, TabbarItem, Group, Cell, Tab,
-    TransferDom, Popup,XButton
+    TransferDom, Popup, XButton
   } from 'vux';
   import {mapGetters, mapActions} from 'vuex'
   import selectMusicFade from '@/components/selectMusicFade.vue'
+
   export default {
     directives: {
       TransferDom
@@ -68,11 +73,11 @@
       FlexboxItem,
       Divider, XImg,
       Tabbar, TabbarItem, Group, Cell, Tab,
-      TransferDom, Popup,XButton,selectMusicFade
+      TransferDom, Popup, XButton, selectMusicFade
     },
-    data:function(){
-      return{
-        show:false
+    data: function () {
+      return {
+        show: false
       }
     },
     computed: {
@@ -92,10 +97,10 @@
       changePlayStatus: function () {
         this.$store.dispatch('changeStatus', !this.isPlay);
       },
-     click:function () {
-       // this.$store.dispatch('changeplayListIsShow', true);
-       this.show=true;
-     }
+      click: function () {
+        // this.$store.dispatch('changeplayListIsShow', true);
+        this.show = true;
+      }
     }
   }
 </script>

@@ -2,8 +2,9 @@
   <div style="margin-top: 10px;">
     <div style="margin-left: 5px"><strong>{{this.title}}></strong></div>
     <grid :cols="3" :col="2">
-      <grid-item v-for="(item, index)  in this.list" :key="index">
-        <one-place :imageUrl="item.imageUrl" :description="item.description" @click.native="showPlayList"></one-place>
+      <grid-item v-for="(item, index)  in this.list" :key="index" v-if="index<6">
+        <one-place :imageUrl="item.picUrl" :description="item.name"
+                   @click.native="showPlayList(index)"></one-place>
       </grid-item>
     </grid>
   </div>
@@ -22,16 +23,17 @@
       onePlace
     },
     props: {
-      title:{
-        type:String
+      title: {
+        type: String
       },
-      list:{
-        type:Array
+      list: {
+        type: Array
       }
     },
-    methods:{
-      showPlayList:function () {
-        this.$router.push('/playListPage')
+    methods: {
+      showPlayList: function (index) {
+        // this.$router.push({path: '/playListPage', query: {id: this.list[index].id, imgUrl: this.list[index].id,}})
+        this.$router.push({name: 'playListPage', params: {list: this.list[index]}});
       }
     }
   }

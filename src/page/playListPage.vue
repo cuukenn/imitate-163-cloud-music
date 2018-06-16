@@ -7,24 +7,18 @@
       </header>
       <div class="content">
         <div id="FM" style=" margin-left: 10% ; height: 150px;">
-          <div id="FM-img" style="margin-top: 25px;height: 150px; width:40% ; float: left;background-image: url(/static/image/music-1.jpg);  background-size: contain ; background-repeat: no-repeat ;background-color: rgba(0,0,0,0.8);-webkit-filter:brightness(1);//兼容不同浏览器
+          <x-img default-src="/static/image/default.gif" :src="this.item.picUrl" id="FM-img" style="margin-top: 25px;height: 150px; width:40% ; float: left;background-size: contain ; background-repeat: no-repeat ;background-color: rgba(0,0,0,0.8);-webkit-filter:brightness(1);//兼容不同浏览器
 -o-filter:brightness(0.4);
 -moz-filter:brightness(0.4);
 filter:brightness(0.4);">
-          </div>
-          <div id="FM-zhuanji" style="height: 150px; width:50%;float: left;">
-            <div id="ZJ-name"
-                 style=" height: 40px; width: 100%;font-family: '楷体';line-height: 40px; font-size: 15px;text-indent: 30px; ">
-            </div>
-            <div id="ZJ-kongbai" style=" height: 20px; width: 100%;">
-            </div>
-            <div id="username"
-                 style=" height: 40px; width: 100%; font-family: '楷体';line-height: 40px; font-size: 15px;text-indent: 30px;">
-              <div style="height: 40px; width: 20%; margin-left: 10%; float: left;"></div>
-              <div
-                style=" height: 40px; width: 70%;font-family: '楷体';float: left; line-height: 40px; font-size: 15px;text-indent: 30px;">
-                风行碧野
-              </div>
+          </x-img>
+          <div id="FM-zhuanji" style="height: 150px; width:56%;float: left;margin-top: 25px;">
+            <div style="font-size: 1.6em;color: white;width: 100%">
+              <p v-text="this.item.name  ||''"></p>
+              <x-img style="margin-top:20px;float: left; width:auto;height:3em"
+                     default-src="/static/image/default.gif" :src="this.playList.creator.avatarUrl"/>
+              <p style="margin-top:20px;float: left;font-size: 0.6em;height:4em;line-height: 4em;text-align: center"
+                 v-text="this.playList.creator.nickname"></p>
             </div>
           </div>
         </div>
@@ -67,7 +61,7 @@ filter:brightness(0.4);">
                 style="float: left; height: 70px; width: 100%;margin-left: 5%;">
                 <div style="height: 3rem; width: 100%">
                   <i
-                  class="iconfont icon-duoxuankuang1"/>
+                    class="iconfont icon-duoxuankuang1"/>
                 </div>
                 <div>评论</div>
               </div>
@@ -75,21 +69,22 @@ filter:brightness(0.4);">
           </flexbox-item>
         </flexbox>
         <Group>
-          <cell style="width:100%;border-top: 1px solid white; border-top-left-radius:0.8rem;border-top-right-radius:0.8rem;"
-          title="播放全部">
+          <cell
+            style="width:100%;border-top: 1px solid white; border-top-left-radius:0.8rem;border-top-right-radius:0.8rem;"
+            title="播放全部">
             <i slot="icon" class="iconfont icon-bofang1"></i>
           </cell>
-          <cell-box v-for="i in 19" :key="i">
-            <div id="LB-1" style="height:4rem;width: 100%;">
-              <div style="line-height: 50px;width: 10%; text-indent: 10px;float: left;">{{i}}</div>
+          <cell-box v-for="(item,index) in this.playList.tracks" :key="index">
+            <div id="LB-1" style="height:4rem;width: 100%;" v-on:click="selectList(index)">
+              <div style="line-height: 50px;width: 10%; text-indent: 10px;float: left;">{{index+1}}</div>
               <div style="width: 70%;float: left;">
                 <div
                   style="float: left; width: 100%; height: 3rem; line-height: 35px;text-indent: 20px;">
-                  神器白发
+                  {{ item.name}}
                 </div>
                 <div
                   style="float: left; width: 100%;height: 1rem;text-indent: 20px;font-size: 10px;">
-                  西瓜MM
+                  {{item.ar[0].name}}
                 </div>
               </div>
               <div style="float: left; width: 10%; ">xxxx</div>
@@ -160,8 +155,9 @@ filter:brightness(0.4);">
   }
 </style>
 <script>
-  import {ViewBox, XHeader, Flexbox, FlexboxItem, Group, CellBox,Cell} from 'vux'
+  import {ViewBox, XHeader, Flexbox, FlexboxItem, Group, CellBox, Cell, XImg} from 'vux'
   import playcontrol from '@/components/playcontrol.vue'
+  import {mapActions, mapGetters} from 'vuex'
 
   export default {
     name: 'playlistPage',
@@ -169,8 +165,81 @@ filter:brightness(0.4);">
       ViewBox,
       XHeader,
       Flexbox, FlexboxItem,
-      Group, CellBox,Cell,
+      Group, CellBox, Cell,
+      XImg,
       playcontrol
+    },
+    data: function () {
+      return {
+        playList: {
+          creator: {
+            avatarUrl: "",
+            name: ""
+          }
+        },
+        item: {}
+      }
+    },
+    computed: {
+      ...mapGetters([
+        'playListData'
+      ])
+    },
+    beforeRouteEnter(to, from, next) {
+      next(vm => {
+        vm.item = vm.$route.params.list;
+        vm.getData();
+      })
+    },
+    beforeRouteLeave(to, from, next) {
+      this.$vux.loading.hide();
+      next();
+    },
+    methods: {
+      ...mapActions([
+        'changeplayListData',
+        'changeMusic',
+        'changeplayIndex',
+        'changeStatus',
+        'addMusic'
+      ]),
+      getData: function () {
+        this.$vux.loading.show({
+          text: 'Loading'
+        })
+        let id = this.item.id || 0;
+        this.$ajax.get('http://localhost:3000/playlist/detail', {
+          params: {
+            id: id
+          }
+        }).then((rs) => {
+          this.playList = rs.data.playlist || {};
+          this.$vux.loading.hide();
+        }).catch(err => {
+          this.$vux.toast.show({
+            text: '网络出错',
+            type: 'warn',
+          })
+          this.$vux.loading.hide();
+        })
+      },
+      selectList: function (index) {
+        let musicList = [];
+        this.playList.tracks.forEach((item, index, value) => {
+          let obj = {};
+          obj.name = item.name;
+          obj.author = item.ar[0].name;
+          obj.imageUrl = item.al.picUrl;
+          obj.url = "";
+          obj.id = item.id;
+          musicList.push(obj);
+        });
+        this.$store.dispatch('changeplayListData', musicList);//更改正在播发列表
+        let music = musicList[index];
+        this.$store.dispatch('changeMusic', music);//分发
+        this.$store.dispatch('changeplayIndex', index);//添加到播放列表
+        this.$store.dispatch('changeStatus', true);//开始播放
+      }
     }
   }
 </script>

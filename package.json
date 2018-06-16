@@ -12,6 +12,7 @@
   "dependencies": {
     "es6-promise": "^4.2.4",
     "fastclick": "^1.0.6",
+    "jquery": "^3.3.1",
     "slider": "^1.0.4",
     "swiper": "^4.2.6",
     "vue": "^2.5.2",

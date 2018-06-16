@@ -15,7 +15,7 @@
         <FlexboxItem>
           <div class="center" v-on:click="$router.push('/FM')">
             <card>
-              <i slot="header"  class="iconfont icon-CN_doubanFM demo"></i>
+              <i slot="header" class="iconfont icon-CN_doubanFM demo"></i>
               <p slot="content">
                 <small>私人FM</small>
               </p>
@@ -25,7 +25,7 @@
         <FlexboxItem>
           <div v-on:click="$router.push('/everyDayRecmend')" class="center">
             <card>
-              <i slot="header"  class="iconfont icon-rili demo"></i>
+              <i slot="header" class="iconfont icon-rili demo"></i>
               <p slot="content">
                 <small>每日推荐</small>
               </p>
@@ -36,7 +36,7 @@
         <FlexboxItem>
           <div v-on:click="$router.push('/MusicList')" class="center">
             <card>
-              <i slot="header"  class="iconfont icon-jiarugedan demo"></i>
+              <i slot="header" class="iconfont icon-jiarugedan demo"></i>
               <p slot="content">
                 <small>歌单</small>
               </p>
@@ -86,6 +86,7 @@
   import {mapGetters, mapActions} from 'vuex'
 
   export default {
+    name: "recommend",
     components: {
       swiper,
       swiperSlide,
@@ -117,33 +118,50 @@
           "../../../static/image/slide-8.jpg",],
         swiperElm: null
       }
-    }
-    ,
+    },
     computed: {
       ...
         mapGetters([
           'sixPalacesData',
-          'recommendHeight'
+          'recommendHeight',
+          'changeSixPalacesData'
         ]),
       height:
 
         function () {
           return this.recommendHeight + 'px';
         }
-    }
-    ,
+    },
+    beforeRouteLeave(to, from, next) {
+      this.$vux.loading.hide();
+      next();
+    },
     mounted: function () {
+      this.getSixPalacesData();
       if (!this.swiperElm === null) {
         this.swiperElm = document.querySelector('#recommendSwiper');
         this.$store.dispatch('changerecommendHeight', this.recommendHeight - this.swiperElm.offsetHeight);
       }
-    }
-    ,
+    },
     methods: {
       ...
         mapActions([
           'changerecommendHeight'
-        ])
+        ]),
+      getSixPalacesData: function () {
+        this.$vux.loading.show({
+          text: 'Loading'
+        })
+        this.$ajax.get('http://localhost:3000/personalized').then((rs) => {
+          let list = new Array();
+          let obj = new Object();
+          obj.title = '推荐歌单';
+          obj.list = rs.data.result;
+          list.push(obj);
+          this.$store.dispatch('changeSixPalacesData', list);
+          this.$vux.loading.hide();
+        })
+      }
     }
   }
 </script>
