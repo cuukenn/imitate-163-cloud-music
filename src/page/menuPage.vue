@@ -12,6 +12,16 @@
             <x-button text="立即登陆" action-type="button" :mini="true" link="/menu/login"></x-button>
           </div>
         </div>
+        <div v-show="this.isLogin" style="position: relative">
+          <img src="../../static/image/bg.jpg" width="100%"/>
+          <flexbox orient="vertical" style="position: absolute;top: 50px;left: 10%">
+            <flexbox-item>
+              <img :src="this.user.profile.avatarUrl " width="60em" height="60em" style="border-radius: 30em"/>
+            </flexbox-item>
+            <flexbox-item style="color: white;font-size: 2em"><p v-text="this.user.profile.nickname"></p>
+            </flexbox-item>
+          </flexbox>
+        </div>
       </div>
       <div>
         <Group style="font-size: 1.6rem;">
@@ -154,7 +164,7 @@
     ,
     computed: {
       ...
-        mapGetters(['isLogin'])
+        mapGetters(['isLogin', 'user'])
     },
     methods: {
       ...

@@ -1,7 +1,9 @@
 //菜单
 const state = {
-  user: {},
-  isLogin:false
+  user: {
+    profile: {nickname: '', avatarUrl: ''}
+  },
+  isLogin: false
 }
 
 // getters
