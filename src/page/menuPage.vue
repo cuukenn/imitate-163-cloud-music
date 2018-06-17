@@ -3,7 +3,7 @@
     <link rel="stylesheet" href="../../static/css/iconfont.css">
     <view-box>
       <div slot="header" style="background-color: slategray;height: 180px">
-        <div style="position: relative;height: 100%">
+        <div v-show="!this.isLogin" style="position: relative;height: 100%">
           <div style="font-size: 1.6em;">
             <p>登陆网易云音乐</p>
             <p>20k高音质无限下载，手机端多同步</p>
@@ -154,7 +154,7 @@
     ,
     computed: {
       ...
-        mapGetters({})
+        mapGetters(['isLogin'])
     },
     methods: {
       ...

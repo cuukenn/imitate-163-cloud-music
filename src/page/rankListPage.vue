@@ -4,75 +4,60 @@
     <view-box>
       <header class="header" slot="header">
         <x-header>
-          <template name="left">歌单</template>
         </x-header>
       </header>
       <div class="content">
-        <div id="FM" style=" margin-left: 10% ; height: 150px;">
-          <x-img default-src="/static/image/default.gif" :src="this.item.picUrl" id="FM-img" style="margin-top: 25px;height: 150px; width:40% ; float: left;background-size: contain ; background-repeat: no-repeat ;background-color: rgba(0,0,0,0.8);-webkit-filter:brightness(1);//兼容不同浏览器
--o-filter:brightness(0.4);
--moz-filter:brightness(0.4);
-filter:brightness(0.4);">
-          </x-img>
-          <div id="FM-zhuanji" style="height: 150px; width:56%;float: left;margin-top: 25px;">
-            <div style="font-size: 1.6em;color: white;width: 100%">
-              <p v-text="this.item.name  ||''"></p>
-              <x-img style="margin-top:20px;float: left; width:auto;height:3em"
-                     default-src="/static/image/default.gif" :src="this.playList.creator.avatarUrl"/>
-              <p style="margin-top:20px;float: left;font-size: 0.6em;height:4em;line-height: 4em;text-align: center"
-                 v-text="this.playList.creator.nickname"></p>
-            </div>
-          </div>
-        </div>
-        <flexbox style="margin-top: 10px">
-          <flexbox-item>
-            <div class="fontIcon">
-              <div
-                style="float: left; height: 70px; width: 100%;margin-left: 5%;">
-                <div style="height: 3rem; width: 100%"><i
-                  class="iconfont icon-pinglun"></i></div>
-                <div>评论</div>
-              </div>
-            </div>
-          </flexbox-item>
-          <flexbox-item>
-            <div class="fontIcon">
-              <div
-                style="float: left; height: 70px; width: 100%;margin-left: 5%;">
-                <div style="height: 3rem; width: 100%">
-                  <i class="iconfont icon-iconfontzhizuobiaozhun20"></i>
-                </div>
-                <div>评论</div>
-              </div>
-            </div>
-          </flexbox-item>
-          <flexbox-item>
-            <div class="fontIcon">
-              <div
-                style="float: left; height: 70px; width: 100%;margin-left: 5%;">
-                <div style="height: 3rem; width: 100%">
-                  <i class="iconfont icon-download"/>
-                </div>
-                <div>评论</div>
-              </div>
-            </div>
-          </flexbox-item>
-          <flexbox-item>
-            <div class="fontIcon">
-              <div
-                style="float: left; height: 70px; width: 100%;margin-left: 5%;">
-                <div style="height: 3rem; width: 100%">
-                  <i
-                    class="iconfont icon-duoxuankuang1"/>
-                </div>
-                <div>评论</div>
-              </div>
-            </div>
-          </flexbox-item>
-        </flexbox>
-        <Group>
+        <x-img :src="this.imgUrl" style="height: 28em;width: 100%;"></x-img>
+          <!--<flexbox style="margin-top: 10px">-->
+            <!--<flexbox-item>-->
+              <!--<div class="fontIcon">-->
+                <!--<div-->
+                  <!--style="float: left; height: 70px; width: 100%;margin-left: 5%;">-->
+                  <!--<div style="height: 3rem; width: 100%"><i-->
+                    <!--class="iconfont icon-pinglun"></i></div>-->
+                  <!--<div>评论</div>-->
+                <!--</div>-->
+              <!--</div>-->
+            <!--</flexbox-item>-->
+            <!--<flexbox-item>-->
+              <!--<div class="fontIcon">-->
+                <!--<div-->
+                  <!--style="float: left; height: 70px; width: 100%;margin-left: 5%;">-->
+                  <!--<div style="height: 3rem; width: 100%">-->
+                    <!--<i class="iconfont icon-iconfontzhizuobiaozhun20"></i>-->
+                  <!--</div>-->
+                  <!--<div>评论</div>-->
+                <!--</div>-->
+              <!--</div>-->
+            <!--</flexbox-item>-->
+            <!--<flexbox-item>-->
+              <!--<div class="fontIcon">-->
+                <!--<div-->
+                  <!--style="float: left; height: 70px; width: 100%;margin-left: 5%;">-->
+                  <!--<div style="height: 3rem; width: 100%">-->
+                    <!--<i class="iconfont icon-download"/>-->
+                  <!--</div>-->
+                  <!--<div>评论</div>-->
+                <!--</div>-->
+              <!--</div>-->
+            <!--</flexbox-item>-->
+            <!--<flexbox-item>-->
+              <!--<div class="fontIcon">-->
+                <!--<div-->
+                  <!--style="float: left; height: 70px; width: 100%;margin-left: 5%;">-->
+                  <!--<div style="height: 3rem; width: 100%">-->
+                    <!--<i-->
+                      <!--class="iconfont icon-duoxuankuang1"/>-->
+                  <!--</div>-->
+                  <!--<div>评论</div>-->
+                <!--</div>-->
+              <!--</div>-->
+            <!--</flexbox-item>-->
+          <!--</flexbox>-->
+
+        <Group gutter="0">
           <cell
-            style="width:100%;border-top: 1px solid white; border-top-left-radius:0.8rem;border-top-right-radius:0.8rem;"
+            style="width:100%;border-top-left-radius:0.8rem;border-top-right-radius:0.8rem;"
             title="播放全部">
             <i slot="icon" class="iconfont icon-bofang1"></i>
           </cell>
@@ -174,7 +159,7 @@ filter:brightness(0.4);">
     data: function () {
       return {
         playList: {},
-        item: {}
+        imgUrl:''
       }
     },
     computed: {
@@ -184,8 +169,8 @@ filter:brightness(0.4);">
     },
     beforeRouteEnter(to, from, next) {
       next(vm => {
-        vm.item = vm.$route.params.list;
-        vm.getData();
+        vm.playList = vm.$route.params.playList;
+        vm.imgUrl = vm.$route.params.imgUrl;
       })
     },
     beforeRouteLeave(to, from, next) {
@@ -200,28 +185,6 @@ filter:brightness(0.4);">
         'changeStatus',
         'addMusic'
       ]),
-      getData: function () {
-        this.$vux.loading.show({
-          text: 'Loading'
-        })
-        let id = this.item.id || 0;
-        this.$ajax.get('http://localhost:3000/playlist/detail', {
-          params: {
-            id: id
-          },
-          xhrFields: {withCredentials: true}
-        }).then((rs) => {
-
-          this.playList = rs.data.playlist || {};
-          this.$vux.loading.hide();
-        }).catch(err => {
-          this.$vux.toast.show({
-            text: '网络出错',
-            type: 'warn',
-          })
-          this.$vux.loading.hide();
-        })
-      },
       selectList: function (index) {
         let musicList = [];
         this.playList.tracks.forEach((item, index, value) => {

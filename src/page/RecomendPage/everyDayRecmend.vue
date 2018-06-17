@@ -145,7 +145,7 @@
         this.$vux.loading.show({
           text: 'Loading'
         })
-        this.$ajax.get('http://localhost:3000/recommend/songs', {xhrFields: {withCredentials: true}}).then((rs) => {
+        this.$ajax.get('http://localhost:3000/recommend/songs').then((rs) => {
           this.playList = rs.data.recommend || {};
           this.$vux.loading.hide();
         }).catch(err => {

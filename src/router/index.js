@@ -41,6 +41,8 @@ import RankingList from '@/page/RecomendPage/RankingList.vue'
 
 //search页面子路由
 import SearchResult from '@/page/SearchResult.vue'
+//
+import rankListPage from '@/page/rankListPage.vue'
 
 Vue.use(Router)
 
@@ -79,6 +81,11 @@ export default new Router({
       name: 'welcome',
       path: '/',
       component: welcome
+    },
+    {
+      name: 'rankListPage',
+      path: '/rankListPage',
+      component: rankListPage
     },
     {
       name: 'everyDayRecmend',

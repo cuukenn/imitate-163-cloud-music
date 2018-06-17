@@ -7,11 +7,12 @@ import FastClick from 'fastclick'
 import VueRouter from 'vue-router'
 import App from './App'
 import router from './router/index'
-import {AlertPlugin, ToastPlugin,LoadingPlugin} from 'vux'
+import {AlertPlugin, ToastPlugin, LoadingPlugin} from 'vux'
 import store from './store'
 import 'es6-promise/auto'
 import axios from 'axios'
 
+axios.defaults.withCredentials = true;
 Vue.use(LoadingPlugin)
 Vue.use(VueRouter)
 Vue.use(Vuex)

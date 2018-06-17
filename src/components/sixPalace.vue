@@ -32,7 +32,6 @@
     },
     methods: {
       showPlayList: function (index) {
-        // this.$router.push({path: '/playListPage', query: {id: this.list[index].id, imgUrl: this.list[index].id,}})
         this.$router.push({name: 'playListPage', params: {list: this.list[index]}});
       }
     }
