@@ -10,7 +10,7 @@
     </tab>
   </div>
 </template>
-<style lang="less">
+<style lang="less" scoped>
 
 </style>
 <script>

@@ -94,7 +94,6 @@ const mutations = {
         }
       })
       state.music = music;
-      console.log(state.music)
     }
   },
   updateisPlay(state, isPlay = false) {

@@ -4,6 +4,7 @@
     <view-box>
       <div slot="header" style="background-color: slategray;height: 180px">
         <div v-show="!this.isLogin" style="position: relative;height: 100%">
+          <!--<img src="/static/image/bg.jpg" width="100%"/>-->
           <div style="font-size: 1.6em;">
             <p>登陆网易云音乐</p>
             <p>20k高音质无限下载，手机端多同步</p>
@@ -13,10 +14,11 @@
           </div>
         </div>
         <div v-show="this.isLogin" style="position: relative">
-          <img src="../../static/image/bg.jpg" width="100%"/>
+          <img :src="this.user.profile.backgroundUrl" width="100%"/>
           <flexbox orient="vertical" style="position: absolute;top: 50px;left: 10%">
             <flexbox-item>
-              <img :src="this.user.profile.avatarUrl " width="60em" height="60em" style="border-radius: 30em"/>
+              <img :src="this.user.profile.avatarUrl " width="60em" height="60em" style="border-radius: 30em"
+                   v-on:click="$router.push('/menu/myIndex')"/>
             </flexbox-item>
             <flexbox-item style="color: white;font-size: 2em"><p v-text="this.user.profile.nickname"></p>
             </flexbox-item>

@@ -32,7 +32,7 @@ import timing from '@/page/menuAside/timing.vue'
 import VIP from '@/page/menuAside/VIP.vue'
 import voiceToMusic from '@/page/menuAside/voiceToMusic.vue'
 import login from '@/page/menuAside/login.vue'
-
+import myIndex from '@/page/menuAside/MyIndex.vue'
 //音乐界面四个圆圈
 import everyDayRecmend from '@/page/RecomendPage/everyDayRecmend.vue'
 import FM from '@/page/RecomendPage/FM.vue'
@@ -206,6 +206,11 @@ export default new Router({
       name: 'voiceToMusic',
       path: '/menu/voiceToMusic',
       component: voiceToMusic
+    },
+    {
+      name: 'myIndex',
+      path: '/menu/myIndex',
+      component: myIndex
     }
   ]
 })

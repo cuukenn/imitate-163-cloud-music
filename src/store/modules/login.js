@@ -1,4 +1,6 @@
 //菜单
+import axios from 'axios'
+
 const state = {
   user: {
     profile: {nickname: '', avatarUrl: ''}

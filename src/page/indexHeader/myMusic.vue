@@ -13,8 +13,9 @@
     </group>
     <transition name="myMusicToggle" mode="out-in">
       <Group v-show="this.isShow">
-        <cell :title="item.title" @click.native="noActionClick" v-for="(item,index) in myMusiclist" :key="index">
-          <x-img slot="icon" :default-src="item.titleImg" style="width: 28px"></x-img>
+        <cell :title="item.name" @click.native="showPlayList(index)" v-for="(item,index) in myMusiclist.playlist"
+              :key="index">
+          <x-img slot="icon" :default-src="item.coverImgUrl" style="width: 28px"></x-img>
         </cell>
       </Group>
     </transition>
@@ -24,6 +25,7 @@
   .myMusicToggle-enter-active {
     transition: all 0.5s linear;
   }
+
   .myMusicToggle-enter,
   .myMusicToggle-enter-leave-to {
     opacity: 0;
@@ -34,7 +36,8 @@
     Group, Cell,
     XImg
   } from 'vux';
-  import {mapGetters} from 'vuex'
+  import {mapGetters, mapActions} from 'vuex'
+
   export default {
     components: {
       Group, Cell,
@@ -67,12 +70,33 @@
         ]
       }
     },
-    computed:{
-      ...mapGetters({
-        myMusiclist:'myMusicData'
-      })
+    computed: {
+      ...mapGetters([
+        'user',
+        'isLogin',
+        'myMusiclist'
+      ])
+    },
+    mounted: function () {
+      if (this.isLogin === false) {
+        this.$vux.toast.show({
+          text: '未登录',
+          type: 'warn',
+        })
+        this.$router.push('/menu/login');
+      }
+      if (this.myMusiclist.playlist.length > 0) return;
+      this.$ajax.get('http://localhost:3000/user/playlist', {params: {uid: this.user.account.id}})
+        .then((rs) => {
+          if (rs.data.code === 200) {
+            this.$store.dispatch('changemyMusiclist', rs.data.playlist);//添加到播放列表
+          }
+        })
     },
     methods: {
+      ...mapActions([
+        'changemyMusiclist'
+      ]),
       shrink: function () {
         this.isShow = !this.isShow;
       },
@@ -81,6 +105,9 @@
           text: '未完成',
           type: 'warn',
         })
+      },
+      showPlayList: function (index) {
+        this.$router.push({name: 'playListPage', params: {list: this.myMusiclist.playlist[index]}});
       }
     }
   }
