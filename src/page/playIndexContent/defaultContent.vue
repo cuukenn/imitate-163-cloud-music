@@ -1,9 +1,13 @@
 <template>
   <div style="overflow: hidden;position: relative">
+    <previewer ref="previewer" :list="previewerList">
+    </previewer>
+
     <div class="readHeadPoint"></div>
     <div class="readHead" :class="{rotatePlay:this.isPlay}"></div>
     <div id="outerBox"
-         :style="{transform:this.deg,backgroundImage:this.imageUrlFormat,height:this.heightFormat,marginTop:this.marginTopFormat,borderRadius:this.borderRadiusFormat}">
+         :style="{transform:this.deg,backgroundImage:this.imageUrlFormat,height:this.heightFormat,marginTop:this.marginTopFormat,borderRadius:this.borderRadiusFormat}"
+         v-on:click="this.showPreviewer">
     </div>
   </div>
 </template>
@@ -53,13 +57,14 @@
   }
 </style>
 <script>
-  import {Grid, GridItem} from 'vux'
+  import {Grid, GridItem, Previewer} from 'vux'
   import {mapGetters} from 'vuex'
 
   export default {
     components: {
       Grid,
-      GridItem
+      GridItem,
+      Previewer
     },
     data: function () {
       return {
@@ -72,7 +77,12 @@
           marginTop: 0,
           width: 0,
           borderRadius: 0
-        }
+        },
+        previewerList: [{
+          src: '',
+          w: 300,
+          h: 300
+        }]
       }
     },
     computed: {
@@ -109,6 +119,13 @@
         this.cn = this.cn + this.step;
         this.deg = 'rotate(' + (this.cn % 360) + 'deg';
         requestAnimationFrame(this.rotateF);
+      },
+      showPreviewer: function () {
+        if (this.previewerList[0].src !== this.music.imageUrl) {
+          this.previewerList[0].src = this.music.imageUrl;
+        }
+        console.log(this.previewerList)
+        this.$refs.previewer.show(0);
       }
     }
   }

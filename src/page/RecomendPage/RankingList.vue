@@ -11,6 +11,7 @@
     <group title="官方榜">
       <cell-box style="height: 6em;margin-top: 1em" v-for="(item,index) in this.data.imgList"
                 :key="index"
+                v-if="data.dataList.length>0"
                 :link="{name: 'rankListPage',params: {playList:data.dataList[item.index].playlist,imgUrl:item.src}}">
         <flexbox-item :span="1/3">
           <x-img :src="item.src"></x-img>

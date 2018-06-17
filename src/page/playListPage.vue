@@ -173,7 +173,9 @@ filter:brightness(0.4);">
     },
     data: function () {
       return {
-        playList: {},
+        playList: {
+          creator: {avatarUrl: '', nickname: ''}
+        },
         item: {}
       }
     },
@@ -184,8 +186,10 @@ filter:brightness(0.4);">
     },
     beforeRouteEnter(to, from, next) {
       next(vm => {
-        vm.item = vm.$route.params.list;
-        vm.getData();
+        if (vm.$route.params.list) {
+          vm.item = vm.$route.params.list;
+          vm.getData();
+        }
       })
     },
     beforeRouteLeave(to, from, next) {

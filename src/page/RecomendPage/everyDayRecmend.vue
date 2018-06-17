@@ -121,7 +121,8 @@
     },
     computed: {
       ...mapGetters([
-        'playListData'
+        'playListData',
+        'isLogin'
       ])
     },
     beforeRouteEnter(to, from, next) {
@@ -142,6 +143,13 @@
         'addMusic'
       ]),
       getData: function () {
+        if (this.isLogin === false) {
+          this.$vux.toast.show({
+            text: '未登录',
+            type: 'warn',
+          })
+          this.$router.push('/menu/login');
+        }
         this.$vux.loading.show({
           text: 'Loading'
         })
