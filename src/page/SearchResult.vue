@@ -27,8 +27,8 @@
                 {{item.artists[0].name}}
               </div>
             </div>
-            <div style="float: left; width: 10%; ">xxxx</div>
-            <div style="float: left; width: 10%; ">cccc</div>
+            <div style="float: left; width: 10%; "></div>
+            <div style="float: left; width: 10%; "></div>
           </div>
         </cell-box>
       </Group>
@@ -76,12 +76,12 @@
     computed: {
       ...mapGetters(
         [
-          'playListData'
+          'playListData', 'localhost'
         ])
     },
     beforeRouteEnter(to, from, next) {
       next(vm => {
-        this.onItemClick();
+        vm.onItemClick();
       })
     },
     created: function () {
@@ -125,7 +125,7 @@
       search: function () {
         this.isShow = true;
         if (this.value === "") return
-        this.$ajax.get('http://localhost:3000/search', {
+        this.$ajax.get(this.localhost + '/search', {
           params: {
             keywords: this.value,
             type: this.searchType
@@ -154,7 +154,7 @@
         this.isShow = true;
         let id = this.dataList[index].id;
         let music = new Object();
-        this.$ajax.get('http://localhost:3000/music/url', {params: {id: id}})
+        this.$ajax.get(this.localhost + '/music/url', {params: {id: id}})
           .then((rs) => {
             music.url = rs.data.data[0].url;
             music.author = this.dataList[index].artists[0].name;

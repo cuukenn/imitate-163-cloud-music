@@ -5,7 +5,9 @@ const state = {
   user: {
     profile: {nickname: '', avatarUrl: ''}
   },
-  isLogin: false
+  isLogin: false,
+  // localhost: 'http://10.0.2.2:3000'
+  localhost: 'http://127.0.0.1:3000'
 }
 
 // getters
@@ -15,6 +17,9 @@ const getters = {
   },
   isLogin: function (state) {
     return state.isLogin
+  },
+  localhost: function (state) {
+    return state.localhost
   }
 }
 // actions

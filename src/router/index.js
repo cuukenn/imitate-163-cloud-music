@@ -33,6 +33,7 @@ import VIP from '@/page/menuAside/VIP.vue'
 import voiceToMusic from '@/page/menuAside/voiceToMusic.vue'
 import login from '@/page/menuAside/login.vue'
 import myIndex from '@/page/menuAside/MyIndex.vue'
+import editUserInfo from '@/page/menuAside/editUserInfo.vue'
 //音乐界面四个圆圈
 import everyDayRecmend from '@/page/RecomendPage/everyDayRecmend.vue'
 import FM from '@/page/RecomendPage/FM.vue'
@@ -211,6 +212,11 @@ export default new Router({
       name: 'myIndex',
       path: '/menu/myIndex',
       component: myIndex
+    },
+    {
+      name: 'editUserInfo',
+      path: '/menu/editUserInfo',
+      component: editUserInfo
     }
   ]
 })

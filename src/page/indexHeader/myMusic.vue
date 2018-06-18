@@ -74,7 +74,8 @@
       ...mapGetters([
         'user',
         'isLogin',
-        'myMusiclist'
+        'myMusiclist',
+        'localhost'
       ])
     },
     mounted: function () {
@@ -86,7 +87,7 @@
         this.$router.push('/menu/login');
       }
       if (this.myMusiclist.playlist.length > 0) return;
-      this.$ajax.get('http://localhost:3000/user/playlist', {params: {uid: this.user.account.id}})
+      this.$ajax.get(this.localhost+'/user/playlist', {params: {uid: this.user.account.id}})
         .then((rs) => {
           if (rs.data.code === 200) {
             this.$store.dispatch('changemyMusiclist', rs.data.playlist);//添加到播放列表

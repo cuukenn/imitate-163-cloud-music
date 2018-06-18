@@ -37,7 +37,7 @@
 </style>
 <script>
   import {Group, Radio, XHeader, CellBox, Flexbox, FlexboxItem, XImg} from 'vux'
-
+  import {mapGetters} from 'vuex'
   export default {
     name: "RankingList",
     components: {
@@ -76,6 +76,11 @@
         }
       }
     },
+    computed:{
+      ...mapGetters([
+        'localhost'
+      ])
+    },
     mounted: function () {
       this.getData();
     },
@@ -86,7 +91,7 @@
       getData: function () {
         while (this.data.dataList.length > 0) this.data.dataList.pop();
         this.data.imgList.forEach((item, index, value) => {
-          this.$ajax.get('http://localhost:3000/top/list', {params: {idx: item.id}})
+          this.$ajax.get(this.localhost+'/top/list', {params: {idx: item.id}})
             .then((rs) => {
               this.data.dataList.push(rs.data);
               item.index = this.data.dataList.length - 1;

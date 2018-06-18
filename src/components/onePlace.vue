@@ -1,7 +1,7 @@
 <template>
   <div>
     <card>
-      <x-img slot="header" default-src="/static/image/default.gif" :src="this.imageUrl"></x-img>
+      <x-img slot="header" default-src="static/image/default.gif" :src="this.imageUrl"></x-img>
       <p slot="content" v-text="this.description"></p>
     </card>
   </div>

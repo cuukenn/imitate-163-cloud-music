@@ -4,20 +4,20 @@ const state = {
     {
       author: '梁静茹',
       name: '人生若只如初见',
-      url: '/static/audio/梁静茹 - 人生若只如初见.mp3',
-      imageUrl: '/static/image/music-1.jpg'
+      url: 'static/audio/music-1.mp3',
+      imageUrl: 'static/image/music-1.jpg'
     },
     {
       author: '许嵩',
       name: '玫瑰花的葬礼',
-      url: '/static/audio/许嵩 - 玫瑰花的葬礼.mp3',
-      imageUrl: '/static/image/music-2.jpg'
+      url: 'static/audio/music-2.mp3',
+      imageUrl: 'static/image/music-2.jpg'
     },
     {
       author: '许嵩',
       name: '深夜书店',
-      url: '/static/audio/许嵩、洛天依 - 深夜书店.mp3',
-      imageUrl: '/static/image/test1.jpg'
+      url: 'static/audio/music-3.mp3',
+      imageUrl: 'static/image/test1.jpg'
     }
   ],
   playListIsShow: false,

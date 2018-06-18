@@ -4,8 +4,8 @@
     <flexbox :gutter="0">
       <flexbox-item :span="3/16">
         <div style="box-sizing: border-box;">
-          <x-img default-src="/static/image/default.gif" :src="this.music.imageUrl"
-                 style="height:48px;width:100%;border: 1px whitesmoke solid" v-on:click="this.showPlayIndex"></x-img>
+          <img :src="this.music.imageUrl"
+               style="height:48px;width:100%;border: 1px whitesmoke solid" v-on:click="this.showPlayIndex"/>
         </div>
       </flexbox-item>
       <flexbox-item :span="6/16">

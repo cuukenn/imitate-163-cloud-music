@@ -122,7 +122,8 @@
     computed: {
       ...mapGetters([
         'playListData',
-        'isLogin'
+        'isLogin',
+        'localhost'
       ])
     },
     beforeRouteEnter(to, from, next) {
@@ -150,19 +151,21 @@
           })
           this.$router.push('/menu/login');
         }
-        this.$vux.loading.show({
-          text: 'Loading'
-        })
-        this.$ajax.get('http://localhost:3000/recommend/songs').then((rs) => {
-          this.playList = rs.data.recommend || {};
-          this.$vux.loading.hide();
-        }).catch(err => {
-          this.$vux.toast.show({
-            text: '网络出错',
-            type: 'warn',
+        else {
+          this.$vux.loading.show({
+            text: 'Loading'
           })
-          this.$vux.loading.hide();
-        })
+          this.$ajax.get(this.localhost + '/recommend/songs').then((rs) => {
+            this.playList = rs.data.recommend || {};
+            this.$vux.loading.hide();
+          }).catch(err => {
+            this.$vux.toast.show({
+              text: '网络出错',
+              type: 'warn',
+            })
+            this.$vux.loading.hide();
+          })
+        }
       },
       selectList: function (index) {
         let musicList = [];

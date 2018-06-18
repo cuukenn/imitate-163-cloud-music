@@ -23,8 +23,8 @@ const state = {
   music: {
     author: '梁静茹',
     name: '人生若只如初见',
-    url: '/static/audio/梁静茹 - 人生若只如初见.mp3',
-    imageUrl: '/static/image/music-1.jpg'
+    url: 'static/audio/music-1.mp3',
+    imageUrl: 'static/image/music-1.jpg'
   }
 };
 

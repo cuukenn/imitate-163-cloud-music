@@ -33,7 +33,8 @@
           </cell>
         </Group>
       </div>
-      <Tabbar slot="bottom" style="position: fixed;width: 80%">
+      <Tabbar slot="bottom" style="position: fixed;width: 100%"
+              :style="{width:this.localhost==='http://127.0.0.1:3000'?'80%':'100%'}">
         <Flexbox style="font-size: 1.6rem">
           <FlexboxItem>
             <div>
@@ -166,7 +167,7 @@
     ,
     computed: {
       ...
-        mapGetters(['isLogin', 'user'])
+        mapGetters(['isLogin', 'user', 'localhost'])
     },
     methods: {
       ...

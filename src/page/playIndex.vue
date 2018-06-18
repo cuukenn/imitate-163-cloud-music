@@ -256,14 +256,14 @@
         let index = (this.playIndex + 1) % this.playListData.length;
         this.$store.dispatch('changeMusic', this.playListData[index]);
         this.$store.dispatch('changeplayIndex', index);
-        this.changePlayStatus(true)
+        this.$store.dispatch('changeStatus', true);
       },
       preMusic: function () {
         let index = (this.playIndex - 1) % this.playListData.length;
         if (index < 0) index = this.playListData.length - 1;
         this.$store.dispatch('changeMusic', this.playListData[index]);
         this.$store.dispatch('changeplayIndex', index);
-        this.changePlayStatus(true)
+        this.$store.dispatch('changeStatus', true);
       },
       formatTime: function (val) {
         return ~~(val / 60) + ':' + parseInt(val % 60);

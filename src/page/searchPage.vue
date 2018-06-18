@@ -26,6 +26,7 @@
 </style>
 <script>
   import {ViewBox, Flexbox, FlexboxItem, Tabbar, XHeader, Search} from 'vux'
+  import {mapGetters} from 'vuex'
   import playcontrol from '@/components/playcontrol.vue'
 
   export default {
@@ -39,9 +40,14 @@
         results: []
       }
     },
+    computed:{
+      ...mapGetters([
+        'localhost'
+      ])
+    },
     methods: {
       search: function () {
-        this.$ajax.get('http://localhost:3000/search', {params: {keywords: this.value, limit: 10}}).then((rs) => {
+        this.$ajax.get(this.localhost+'/search', {params: {keywords: this.value, limit: 10}}).then((rs) => {
           this.results = [];
           if (rs.data.result == {} || rs.data.result == undefined) return;
           let songs = rs.data.result.songs;

@@ -109,13 +109,13 @@
           loop: true
         },
         swiperSlides: [
-          "../../../static/image/slide-1.jpg",
-          "../../../static/image/slide-2.jpg",
-          "../../../static/image/slide-3.jpg",
-          "../../../static/image/slide-4.jpg",
-          "../../../static/image/slide-6.jpg",
-          "../../../static/image/slide-7.jpg",
-          "../../../static/image/slide-8.jpg",],
+          "static/image/slide-1.jpg",
+          "static/image/slide-2.jpg",
+          "static/image/slide-3.jpg",
+          "static/image/slide-4.jpg",
+          "static/image/slide-6.jpg",
+          "static/image/slide-7.jpg",
+          "static/image/slide-8.jpg",],
         swiperElm: null,
       }
     },
@@ -124,7 +124,8 @@
         mapGetters([
           'sixPalacesData',
           'recommendHeight',
-          'changeSixPalacesData'
+          'changeSixPalacesData',
+          'localhost'
         ]),
       height:
 
@@ -150,7 +151,7 @@
           'changerecommendHeight'
         ]),
       getBanner: function () {
-        this.$ajax.get('http://localhost:3000/banner').then((rs) => {
+        this.$ajax.get(this.localhost+'/banner').then((rs) => {
           let banners = rs.data.banners;
           while (this.swiperSlides.length > 0) this.swiperSlides.pop();
           banners.forEach((item, index, value) => {
@@ -162,7 +163,8 @@
         this.$vux.loading.show({
           text: 'Loading'
         })
-        this.$ajax.get('http://localhost:3000/personalized').then((rs) => {
+        console.log(this.localhost+'/personalized')
+        this.$ajax.get(this.localhost+'/personalized').then((rs) => {
           let list = new Array();
           let obj = new Object();
           obj.title = '推荐歌单';
