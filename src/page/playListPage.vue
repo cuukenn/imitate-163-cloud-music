@@ -9,7 +9,7 @@
       </header>
       <div class="content">
         <div id="FM" style=" margin-left: 10% ; height: 150px;">
-          <x-img default-src="/static/image/default.gif" :src="this.item.picUrl" id="FM-img" style="margin-top: 25px;height: 150px; width:40% ; float: left;background-size: contain ; background-repeat: no-repeat ;background-color: rgba(0,0,0,0.8);-webkit-filter:brightness(1);//兼容不同浏览器
+          <x-img default-src="static/image/default.gif" :src="this.playList.coverImgUrl" id="FM-img" style="margin-top: 25px;height: 150px; width:40% ; float: left;background-size: contain ; background-repeat: no-repeat ;background-color: rgba(0,0,0,0.8);-webkit-filter:brightness(1);//兼容不同浏览器
 -o-filter:brightness(0.4);
 -moz-filter:brightness(0.4);
 filter:brightness(0.4);">
@@ -18,7 +18,7 @@ filter:brightness(0.4);">
             <div style="font-size: 1.6em;color: white;width: 100%">
               <p v-text="this.item.name  ||''"></p>
               <x-img style="margin-top:20px;float: left; width:auto;height:3em"
-                     default-src="/static/image/default.gif" :src="this.playList.creator.avatarUrl"/>
+                     default-src="static/image/default.gif" :src="this.playList.creator.avatarUrl"/>
               <p style="margin-top:20px;float: left;font-size: 0.6em;height:4em;line-height: 4em;text-align: center"
                  v-text="this.playList.creator.nickname"></p>
             </div>
@@ -210,7 +210,7 @@ filter:brightness(0.4);">
           text: 'Loading'
         })
         let id = this.item.id || 0;
-        this.$ajax.get(this.localhost+'/playlist/detail', {
+        this.$ajax.get(this.localhost + '/playlist/detail', {
           params: {
             id: id
           },

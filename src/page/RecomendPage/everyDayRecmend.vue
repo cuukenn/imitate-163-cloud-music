@@ -10,7 +10,7 @@
           </div>
         </x-header>
       </header>
-      <x-img default-src="../../../static/image/slide-1.jpg"></x-img>
+      <x-img default-src="static/image/slide-1.jpg"></x-img>
       <Group>
         <cell
           style="width:100%;border-top: 1px solid white; border-top-left-radius:0.8rem;border-top-right-radius:0.8rem;"

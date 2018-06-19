@@ -35,6 +35,16 @@ https://github.com/Binaryify/NeteaseCloudMusicApi
 
 #### 解压该项目包后命令行进入到对应目录  输入npm/cnpm install ，完成后输入npm/cnpm run dev启动项目
 
+
+####注意事项
+转为安卓版本需要修改/store/modules/login.js的localhost指定的服务器地址
+默认已经写了两个localhost用于直接npm运行，另外一个10.0.2.2用于安卓模拟器
+
+####安卓模拟器本地测试配置
+进入wifi设置代理
+不走代理的网址*.music.126.net
+代理服务器名为电脑ip
+端口为3000
 #### 进度示例
 ![Image text](https://gitee.com/cgggitee/h5_vue_wangyiyun/raw/master/img-folder/1.png)
 ![Image text](https://gitee.com/cgggitee/h5_vue_wangyiyun/raw/master/img-folder/2.png)

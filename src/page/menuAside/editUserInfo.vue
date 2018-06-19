@@ -1,7 +1,16 @@
 <template>
   <div style="position: relative">
     <x-header></x-header>
-
+    <!--<group>-->
+      <!--<x-input title="昵称" v-model="userInfo.nickname"></x-input>-->
+      <!--&lt;!&ndash;<selector title="性别" :options="gender"></selector>&ndash;&gt;-->
+      <!--<x-input title="性别" v-model="userInfo.gender"></x-input>-->
+      <!--<datetime-range title="生日" v-model="userInfo.birthday" start-date="1900-01-01"-->
+                      <!--end-date="2099-01-01"></datetime-range>-->
+      <!--<x-input title="生日" v-model="userInfo.birthday"></x-input>-->
+      <!--<x-input title="省份" v-model="userInfo.province"></x-input>-->
+      <!--<x-input title="个人签名" v-model="userInfo.signature"></x-input>-->
+    <!--</group>-->
   </div>
 </template>
 <style lang="less" scoped>
@@ -15,7 +24,7 @@
   }
 </style>
 <script>
-  import {XHeader, Flexbox, FlexboxItem, Tab, TabItem, Group, Cell, XImg} from 'vux'
+  import {XHeader, Flexbox, FlexboxItem, Tab, TabItem, Group, Cell, XImg, XInput, Selector, DatetimeRange} from 'vux'
   import {mapGetters} from 'vuex'
 
   export default {
@@ -23,18 +32,18 @@
     components: {
       XHeader, Flexbox, FlexboxItem,
       Tab, TabItem,
-      Group, Cell, XImg
+      Group, Cell, XImg, XInput, Selector, DatetimeRange
     },
     data: function () {
       return {
-        index: 0,
         userInfo: {
-          profile: {
-            follows: 0,
-            followeds: 0,
-            signature: ''
-          }
+          gender: 0,
+          birthday: '',
+          nickname: '',
+          province: '',
+          signature: ''
         },
+        gender: [{0: '保密', 1: '男性', 2: '女性'}],
         provinces: new Map([
           [110000, '北京市'],
           [120000, '天津市'],
@@ -75,34 +84,21 @@
     },
     computed: {
       ...mapGetters([
-        'user',
-        'isLogin',
-        'myMusiclist',
-        'localhost'
+        'user'
       ])
     },
     beforeRouteEnter(to, from, next) {
       next(vm => {
-        if (vm.isLogin === false) {
-          vm.$vux.toast.show({
-            text: '未登录',
-            type: 'warn',
-          })
-          vm.$router.push('/menu/login');
-        }
-        if (vm.myMusiclist.playlist.length > 0) return;
-        vm.$ajax.get(this.localhost+'/user/playlist', {params: {uid: vm.user.account.id || 0}})
-          .then((rs) => {
-            if (rs.data.code === 200) {
-              vm.$store.dispatch('changemyMusiclist', rs.data.playlist);
-            }
-          })
-        vm.$ajax.get(this.localhost+'/user/detail', {params: {uid: vm.user.account.id || 0}})
-          .then((rs) => {
-            // if (rs.data.code === 200) {
-            vm.userInfo = rs.data;
-            // }
-          })
+        vm.userInfo.gender = vm.user.profile.gender === 1 ? '男' : '女';
+        let obj = [];
+        let date = new Date(vm.user.profile.birthday);
+        obj.push(date.getFullYear());
+        obj.push(date.getMonth());
+        obj.push(date.getDate());
+        vm.userInfo.birthday = obj;
+        vm.userInfo.nickname = vm.user.profile.nickname;
+        vm.userInfo.province = vm.provinces.get(vm.user.profile.province);
+        vm.userInfo.signature = vm.user.profile.signature
       })
     },
     methods: {

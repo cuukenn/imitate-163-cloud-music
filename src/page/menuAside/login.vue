@@ -14,7 +14,7 @@
         <i slot="label" class="iconfont icon-bofang"></i>
         <a slot="right">忘记密码？</a>
       </x-input>
-      <x-button style="width: 80%;margin-left: 10%;border-radius: 1em" text="登陆"
+      <x-button action-type="button" style="width: 80%;margin-left: 10%;border-radius: 1em" text="登陆"
                 type="warn"
                 v-on:click.native="login"></x-button>
     </group>
